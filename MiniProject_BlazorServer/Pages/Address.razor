@@ -1,0 +1,42 @@
+﻿@page "/address"
+
+<PageTitle>Address</PageTitle>
+
+<h3>Address</h3>
+
+<EditForm Model="model" OnValidSubmit="ValidSubmission">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="streetaddress" class="form-label">@nameof(model.StreetAddress)</label>
+    <InputText id="streetaddress" @bind-Value="model.StreetAddress" class="form-control" />
+
+    <label for="city" class="form-label">@nameof(model.City)</label>
+    <InputText id="city" @bind-Value="model.City" class="form-control" />
+    
+    <label for="province" class="form-label">@nameof(model.Province)</label>
+    <InputText id="province" @bind-Value="model.Province" class="form-control" />
+
+    <label for="postalcode" class="form-label">@nameof(model.PostalCode)</label>
+    <InputText id="postalcode" @bind-Value="model.PostalCode" class="form-control" />
+
+    <button class="btn-primary" type="submit">Submit</button>
+</EditForm>
+
+<ul>
+    @foreach (string message in Messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+
+@code {
+    private AddressModel model = new();
+    private List<string> Messages = new();
+
+    private void ValidSubmission()
+    {
+        Messages.Add($"{model.StreetAddress}, {model.City}, {model.Province}, {model.PostalCode}");
+        model = new();
+    }
+}
